@@ -1,0 +1,46 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Exercises {
+  id         Int    @id @default(autoincrement())
+  exerciseId String @unique
+  name       String
+  target     String
+  bodyPart   String
+  equipment  String
+  gifUrl     String
+}
+
+model Muscular_Group {
+  id   Int    @id @default(autoincrement())
+  name String
+}
+
+model Body_Parts {
+  id   Int    @id @default(autoincrement())
+  name String
+}
+
+model Users {
+  id           Int         @id @default(autoincrement())
+  name         String
+  userName     String
+  password     String
+  status       Int         @default(1)
+  membership   MemberShip? @default(BASIC)
+  last_payment String?
+  valid_until  String?
+  created_at   DateTime    @default(now())
+}
+
+enum MemberShip {
+  BASIC
+  MEDIUM
+  ADVANCED
+}
